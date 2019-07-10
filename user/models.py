@@ -8,10 +8,11 @@ class Role(models.Model):
     r_name = models.CharField(max_length=10, verbose_name='角色名称')
 
 
+
 class Jurisdiction(models.Model):
     """权限模型类"""
     j_name = models.CharField(max_length=30, verbose_name='权限名称')
-    models.ManyToManyField(Role)
+    j_jurisdiction = models.ManyToManyField(Role)
 
 
 class Section(models.Model):
