@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'user.content_process.get_user'
             ],
         },
     },
@@ -136,3 +137,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR,"static")
+ ]
