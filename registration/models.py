@@ -13,6 +13,11 @@ class Registration(models.Model):
         (1, '初诊'),
         (2, '复诊')
     )
+    REGISTRATION_STATUS = (
+        (1, '已挂号'),
+        (2, '已住院'),
+        (3, '已退号')
+    )
     r_name = models.CharField(max_length=20, verbose_name='姓名')
     r_ID_number = models.CharField(max_length=18, verbose_name='身份证号')
     r_social_security = models.IntegerField(verbose_name='社保号')
@@ -27,6 +32,7 @@ class Registration(models.Model):
     r_doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, verbose_name='所挂医生')
     r_remarks = models.CharField(max_length=100, verbose_name='备注')
     r_time = models.DateTimeField(auto_now_add=True, verbose_name='挂号时间')
+    r_status = models.SmallIntegerField(choices=REGISTRATION_STATUS, default=1, verbose_name='挂号状态')
 
 
 class Hospital(models.Model):
