@@ -1,6 +1,7 @@
 from django.db import models
 from registration.models import *
 
+
 class Drug(models.Model):
     """药品模型类"""
     DRUG_TYPE = (
