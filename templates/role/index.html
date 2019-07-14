@@ -1,16 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title></title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css" />
-    <link rel="stylesheet" type="text/css" href="../Css/style.css" />
-    <script type="text/javascript" src="../Js/jquery.js"></script>
-    <script type="text/javascript" src="../Js/jquery.sorted.js"></script>
-    <script type="text/javascript" src="../Js/bootstrap.js"></script>
-    <script type="text/javascript" src="../Js/ckform.js"></script>
-    <script type="text/javascript" src="../Js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'Css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'Css/bootstrap-responsive.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'Css/style.css' %}" />
+    <script type="text/javascript" src="{% static 'Js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/jquery.sorted.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/ckform.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/common.js' %}"></script>
 
     <style type="text/css">
         body {
@@ -87,17 +88,20 @@
         <th width="10%">操作</th>
     </tr>
     </thead>
-	     <tr>
-         	<td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
-            <td>管理员</td>
-            <td>启用</td>
-            <td><a href="editRole.html">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:alert('删除成功！');">删除</a> </td>
-        </tr></table>
-        
-        
-   <table class="table table-bordered table-hover definewidth m10" >
-  	<tr><th colspan="5">  <div class="inline pull-right page">
-         10122 条记录 1/507 页  <a href='#'>下一页</a>     <span class='current'>1</span><a href='#'>2</a><a href='/chinapost/index.php?m=Label&a=index&p=3'>3</a><a href='#'>4</a><a href='#'>5</a>  <a href='#' >下5页</a> <a href='#' >最后一页</a></div><div><button type="button" class="btn btn-success" id="newNav">添加角色 </button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success" id="delPro" onClick="delAll();">删除选中</button></div></th></tr>
-  </table>     
+    {% for foo in a %}
+    <tr>
+         	<td style="vertical-align:middle;"><input type="checkbox" name="check" value="{{ foo.id }}"></td>
+            <td>{{ foo.r_name }}</td>
+            {% if foo.r_status == 0 %}
+                <td>启用</td>
+                {% else %}
+                <td>禁用</td>
+            {% endif %}
+
+            <td><a href="{% url 'dds' sid=foo.id %}">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:alert('删除成功！');">删除</a> </td>
+        </tr>
+    {% endfor %}
+
+	       </table>
  </body>
 </html>

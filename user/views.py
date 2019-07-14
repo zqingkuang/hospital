@@ -109,7 +109,8 @@ def register(request):
                 status = request.POST.get('status')
                 role = request.POST.get('role')
                 print(username, '+', password, '+', realname, "+", email, '+', status, '+', role)
-                User.objects.create(user=username, password=password, name=realname, email=email, status=status, role_id=role)
+                User.objects.create(user=username, password=password, name=realname, email=email, status=status,
+                                    role_id=role)
                 return HttpResponse('注册成功')
 
             else:
@@ -133,4 +134,33 @@ def quit(request):
     """退出登录"""
     request.session.flush()
     return redirect('login')
+
+
+def role_index(request):
+    """角色信息首页"""
+    a = Role.objects.all()  # 获取角色表中所有信息
+    return render(request, 'role/index.html', {'a': a})
+
+
+def dds(request, sid):
+    """编辑角色权限"""
+    if request.method == 'GET':
+        a = Role.objects.get(id=sid)
+        b = Jurisdiction.objects.all()
+
+        return render(request, 'role/editRole.html', {'a': a, 'b': b})
+    else:
+        s = request.POST.getlist('group[]')
+        a = Role.objects.get(id=sid)
+        status = request.POST.get('status')
+        a.r_status=status
+        a.save()
+        a.jurisdiction_set.clear()
+
+
+        a.jurisdiction_set.add(*s)
+        return HttpResponse(a.jurisdiction_set.all)
+
+
+
 
