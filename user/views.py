@@ -71,7 +71,6 @@ class Login(views.View):
             u = User.objects.get(user=user, password=password)
 
         except:
-            
-            return render(request, 'login.html', {'a':'账号或密码错误'})
+            return render(request, 'login.html', {'a': '账号或密码错误'})
         else:
             return HttpResponse('登录成功')
