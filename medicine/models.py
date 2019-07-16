@@ -19,14 +19,14 @@ class Drug(models.Model):
     d_s_price = models.IntegerField(verbose_name='药品售价')
     d_name = models.CharField(max_length=50, verbose_name='药品名称')
     d_type = models.SmallIntegerField(choices=DRUG_TYPE, verbose_name='药品类型')
-    d_describe = models.CharField(max_length=100, verbose_name='药品简述描述')
+    d_describe = models.CharField(max_length=500, verbose_name='药品简述描述')
     d_expiration_date = models.CharField(max_length=5, verbose_name='保质期')
     d_detail = models.TextField(verbose_name='药品详细描述')
     d_manufacturers = models.CharField(max_length=100, verbose_name='生产厂家')
     d_explain = models.TextField(verbose_name='药品说明')
-    d_remarks = models.CharField(max_length=100, verbose_name='备注')
-    d_inventory = models.IntegerField(verbose_name='药品库存')
-    d_status = models.SmallIntegerField(choices=DRUG_STATUS, verbose_name='药品状态')
+    d_remarks = models.CharField(max_length=1000, verbose_name='备注')
+    d_inventor = models.IntegerField(verbose_name='药品库存')
+    d_status = models.SmallIntegerField(choices=DRUG_STATUS, verbose_name='药品状态', default=1)
 
 
 class Pharmacy(models.Model):
