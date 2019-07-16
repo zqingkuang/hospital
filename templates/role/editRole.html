@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'Css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'Css/bootstrap-responsive.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'Css/style.css' %}" />
+    <script type="text/javascript" src="{% static 'Js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/jquery.sorted.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/ckform.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Js/common.js' %}"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<form action="{% url 'role_jurisdiction' sid=a.id %}" method="post" class="definewidth m20" >
+    {% csrf_token %}
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <td width="10%" class="tableleft"><font color="red">*</font>角色名称</td>
+
+        <td><input type="text" name="title" value="{{ a.r_name }}"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft"><font color="red">*</font>状态</td>
+        <td>
+            {% if a.r_status == 0 %}
+                <input type="radio" name="status" value="0" checked /> 启用
+               <input type="radio" name="status" value="1"  /> 禁用
+                {% else %}
+                <input type="radio" name="status" value="0" /> 启用
+               <input type="radio" name="status" value="1"  checked /> 禁用
+            {% endif %}
+
+        </td>
+    </tr>
+    <tr>
+        <td class="tableleft"><font color="red">*</font>权限</td>
+        <td>
+		<ul>
+            {% for foo in b %}
+                {% if foo in a.jurisdiction_set.all %}
+                 <ul>
+                <label class='checkbox inline'><input type='checkbox' checked name='group[]' value='{{ foo.id }}' />{{ foo.j_name }}</label></ul>
+</ul>
+                    {% else %}
+                    <ul>
+                <label class='checkbox inline'><input type='checkbox' name='group[]' value='{{ foo.id }}' />{{ foo.j_name }}</label></ul>
+</ul>
+                {% endif %}
+
+            {% endfor %}
+
+		</td>
+    </tr>
+    <tr>
+        <td class="tableleft"></td>
+        <td>
+            <button type="submit" class="btn btn-primary" type="button">更新</button> &nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {
+        $(':checkbox[name="group[]"]').click(function () {
+            $(':checkbox', $(this).closest('li')).prop('checked', this.checked);
+        });
+
+		$('#backid').click(function(){
+				window.location.href="{% url 'role_index' %}";
+		 });
+
+    });
+</script>

@@ -1,11 +1,17 @@
 from django.db import models
 
+
 # Create your models here.
 
 
 class Role(models.Model):
     """角色模型类"""
+    ORDER_STATUS_CHOICES = (
+        (0, '启用'),
+        (1, '禁用')
+    )
     r_name = models.CharField(max_length=10, verbose_name='角色名称')
+    r_status = models.SmallIntegerField(choices=ORDER_STATUS_CHOICES, verbose_name='状态')
 
 
 class Jurisdiction(models.Model):
