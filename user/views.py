@@ -52,25 +52,85 @@ def verify_code(request):
     return HttpResponse(de, 'image/png')
 
 
-class Login(views.View):
+def Login(request):
     """
     登录页面 \n
     """
+    u_id = request.session.get("u_id")
+    if u_id:
+        return redirect('index')
+    else:
+        if request.method == 'GET':
+            return render(request, 'login.html')
 
-    def get(self, request):
-        return render(request, 'login.html')
-
-    def post(self, request):
-        vcode_input = request.POST.get('vcode')
-        vcode_session = request.session.get('verifycode')
-        if vcode_input != vcode_session:
-            return render(request, 'login.html', {'b': "验证码不正确"})
-        user = request.POST.get('user')
-        password = request.POST.get('password')
-        try:
-            u = User.objects.get(user=user, password=password)
-
-        except:
-            return render(request, 'login.html', {'a': '账号或密码错误'})
         else:
-            return HttpResponse('登录成功')
+            vcode_input = request.POST.get('vcode')
+            vcode_session = request.session.get('verifycode')
+            if vcode_input != vcode_session:
+                return render(request, 'login.html', {'b': "验证码不正确"})
+            user = request.POST.get('user')
+            password = request.POST.get('password')
+            try:
+                u = User.objects.get(user=user, password=password)
+
+            except Exception:
+
+                return render(request, 'login.html', {'a': '账号或密码错误'})
+            else:
+                request.session["u_id"] = u.id
+                return redirect('index')
+
+
+def register(request):
+    """
+    注册
+    :param request:
+    :return:
+    """
+    if request.method == 'GET':
+        """判断表单请求状态"""
+        role = Role.objects.all()
+        return render(request, 'user/addUser.html', {'r': role})
+
+    else:
+        username = request.POST.get('username')
+        try:
+            u = User.objects.get(user=username)
+        except Exception:
+            # return HttpResponse('用户名已存在')
+            password = request.POST.get('password')
+            try:
+                int(password[0])
+            except:
+                if not len(password) >= 10:
+                    return HttpResponse('密码长度不能小于10')
+                realname = request.POST.get('realname')
+                email = request.POST.get('email')
+                status = request.POST.get('status')
+                role = request.POST.get('role')
+                print(username, '+', password, '+', realname, "+", email, '+', status, '+', role)
+                User.objects.create(user=username, password=password, name=realname, email=email, status=status, role_id=role)
+                return HttpResponse('注册成功')
+
+            else:
+                role = Role.objects.all()
+                return render(request, 'user/addUser.html', {'b': '密码不能以数字开头', 'r': role})
+        else:
+            role = Role.objects.all()
+            return render(request, 'user/addUser.html', {'a': '用户名已存在', 'r': role})
+
+
+def index(request):
+    """首页显示"""
+    u_id = request.session.get('u_id')
+    if u_id:
+        return render(request, 'index.html')
+    else:
+        return redirect('login')
+
+
+def quit(request):
+    """退出登录"""
+    request.session.flush()
+    return redirect('login')
+
