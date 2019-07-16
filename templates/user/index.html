@@ -13,6 +13,8 @@
     <script type="text/javascript" src="{% static 'Js/ckform.js' %}"></script>
     <script type="text/javascript" src="{% static 'Js/common.js' %}"></script>
 
+ 
+
     <style type="text/css">
         body {
             padding-bottom: 40px;
@@ -32,11 +34,10 @@
 
 
     </style>
-    
-     <script type="text/javascript">
+    <script type="text/javascript">
      $(function () {
 		$('#newNav').click(function(){
-				window.location.href="addRole.html";
+				window.location.href="addUser.html";
 		 });
     });
 	
@@ -70,38 +71,39 @@
 				alert("请选中要删除的项");
 			}
 		}
-    </script>   
-    
+    </script>
 </head>
 <body>
-<form class="form-inline definewidth m20" action="index.html" method="get">  
-    角色名称：
-    <input type="text" name="rolename" id="rolename" class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
+<form class="form-inline definewidth m20" action="{% url 'user_index' %}" method="post">
+    {% csrf_token %}
+    用户名称：
+    <input type="text" name="name" id="username" class="abc input-default" placeholder="">&nbsp;&nbsp;
     <button type="submit" class="btn btn-primary">查询</button>
 </form>
-<table class="table table-bordered table-hover definewidth m10" >
+<table class="table table-bordered table-hover definewidth m10">
     <thead>
     <tr>
     	<th width="5%"><input type="checkbox" id="checkall" onChange="checkall();"></th>
-        <th>角色名称</th>
-        <th>状态</th>
-        <th width="10%">操作</th>
+        <th>用户账户</th>
+        <th>真实姓名</th>
+        <th>角色</th>
+        <th  width="10%">操作</th>
     </tr>
     </thead>
-    {% for foo in a %}
-        <tr>
-         	<td style="vertical-align:middle;">
-            <td>{{ foo.r_name }}</td>
-            {% if foo.r_status == 0 %}
-                <td>启用</td>
-                {% else %}
-                <td>禁用</td>
-            {% endif %}
 
-            <td><a href="{% url 'role_jurisdiction' sid=foo.id %}">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:alert('删除成功！');">删除</a> </td>
-        </tr>
-    {% endfor %}
+         	{% for foo in a %}
+                <tr>
+         	<td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
+            <td>{{ foo.user }}</td>
+            <td>{{ foo.name }}</td>
+            <td>{{ foo.role.r_name }}</td>
+            <td>
+                <a href="editUser.html">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:alert('删除成功！');">删除</a>
+            </td></tr>
+         	{% endfor %}
 
-	       </table>
- </body>
+
+</table>
+
+</body>
 </html>

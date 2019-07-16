@@ -142,7 +142,7 @@ def role_index(request):
     return render(request, 'role/index.html', {'a': a})
 
 
-def dds(request, sid):
+def role_jurisdiction(request, sid):
     """编辑角色权限"""
     if request.method == 'GET':
         a = Role.objects.get(id=sid)
@@ -153,14 +153,21 @@ def dds(request, sid):
         s = request.POST.getlist('group[]')
         a = Role.objects.get(id=sid)
         status = request.POST.get('status')
-        a.r_status=status
+        a.r_status = status
         a.save()
         a.jurisdiction_set.clear()
-
 
         a.jurisdiction_set.add(*s)
         return HttpResponse(a.jurisdiction_set.all)
 
 
+def user_index(request):
+    """用户首页展示"""
+    if request.method == 'GET':
+        a = User.objects.all()  # 获取用户表数据库中的所有信息
+        return render(request, 'user/index.html', {'a': a})
 
-
+    else:
+        name = request.POST.get('name')
+        a = User.objects.filter(name__icontains=name)
+        return render(request, 'user/index.html', {'a': a})
