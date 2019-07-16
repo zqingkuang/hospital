@@ -171,3 +171,4 @@ def user_index(request):
         name = request.POST.get('name')
         a = User.objects.filter(name__icontains=name)
         return render(request, 'user/index.html', {'a': a})
+
