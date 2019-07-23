@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from PIL import Image, ImageDraw, ImageFont
 from django.utils.six import BytesIO
 from django import views
@@ -156,7 +157,6 @@ def role_jurisdiction(request, sid):
         a.r_status = status
         a.save()
         a.jurisdiction_set.clear()
-
         a.jurisdiction_set.add(*s)
         return HttpResponse(a.jurisdiction_set.all)
 
@@ -172,3 +172,57 @@ def user_index(request):
         a = User.objects.filter(name__icontains=name)
         return render(request, 'user/index.html', {'a': a})
 
+
+def user_deletes(request):
+    """删除多个用户"""
+    a = request.POST.getlist('check')
+
+    a = User.objects.filter(id__in=a).delete()
+    a = User.objects.all()
+    return render(request, 'user/index.html', {'a': a})
+
+
+def user_delete(request, sid):
+    """删除用户"""
+    User.objects.get(id=sid).delete()
+    return redirect('user_index')
+
+
+def user_editUser(request, sid):
+    """修改用户"""
+    if request.method == 'GET':
+        s = User.objects.get(id=sid)
+        b = Role.objects.all()
+        return render(request, 'user/editUser.html', {'b': s, 's': b})
+    else:
+        s = User.objects.get(id=sid)
+        password = request.POST.get('password')
+        realname = request.POST.get('realname')
+        email = request.POST.get('email')
+        status = request.POST.get('status')
+        role = request.POST.get('role')
+        s.password = password
+        s.name = realname
+        s.email = email
+        s.status = status
+        s.role_id = role
+        s.save()
+        return redirect('us er_index')
+
+
+def password(request, sid):
+    """修改用户密码"""
+    if request.method == 'GET':
+        b = User.objects.get(id=sid)
+        return render(request, 'user/password.html', {'b': b})
+    else:
+        b = User.objects.get(id=sid)
+        password = request.POST.get('password')
+        password1 = request.POST.get('password1')
+        if password1 == None or password == None:
+            return render(request, 'user/password.html', {'b': b, 's': '修改密码必须输入值'})
+        if password != password1:
+            return render(request, 'user/password.html', {'b': b, 's': '两次密码不一致'})
+        b.password = password
+        b.save()
+        return redirect('password')

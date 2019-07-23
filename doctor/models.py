@@ -19,4 +19,4 @@ class Doctor(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name='科室')
     education = models.SmallIntegerField(choices=EDUCATION_TYPE_CHOICES, verbose_name='学历')
     remarks = HTMLField(blank=True, verbose_name='备注信息')
-    time = models.DateTimeField(auto_now_add=True, verbose_name='入职时间')
+    time = models.DateTimeField(verbose_name='出生日期') 

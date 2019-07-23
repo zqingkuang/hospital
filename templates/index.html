@@ -73,7 +73,7 @@
 		{id:'11',text:'用户管理',href:'{% url "user_index" %}'},
 		{id:'12',text:'角色管理',href:'{% url "role_index" %}'},
 		{id:'13',text:'资源管理',href:'Resource/index.html'},
-		{id:'13',text:'密码管理',href:'User/password.html'}
+		{id:'13',text:'密码管理',href:'{% url "password" sid=u.id %}'}
 		]}
 		
 		]}
