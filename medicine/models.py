@@ -14,6 +14,7 @@ class Drug(models.Model):
         (2, '停售')
     )
     d_picture = models.ImageField(upload_to='medicine', verbose_name='药品图片')
+    d_number = models.CharField(max_length=11, verbose_name='药品编号')
     d_p_price = models.IntegerField(verbose_name='药品进价')
     d_s_price = models.IntegerField(verbose_name='药品售价')
     d_name = models.CharField(max_length=50, verbose_name='药品名称')

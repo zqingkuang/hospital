@@ -65,8 +65,8 @@
         <tr>
             <td class="tableleft"><font color="red">*</font>状态</td>
             <td>
-                <input type="radio" name="status" value="0" checked/> 启用
-              <input type="radio" name="status" value="1" /> 禁用
+                <input type="radio" name="status" value="启用" checked/> 启用
+              <input type="radio" name="status" value="禁用" /> 禁用
             </td>
         </tr>
         <tr>
@@ -75,7 +75,7 @@
             	<select name="role">
         			<option value="">--请选择--
                     {% for foo in r %}
-                        <option value="{{ foo.id }}" name="role">{{ foo.r_name }}
+                        <option value="{{ foo.r_name }}" name="role">{{ foo.r_name }}
                     {% endfor %}
        			 </select>
         	</td>

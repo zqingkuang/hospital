@@ -9,6 +9,7 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('quit/', views.quit, name='quit'),
     path('role_index/', views.role_index, name='role_index'),
-    path('sdf/<int:sid>/', views.dds, name='dds')
+    path('role_jurisdiction/<int:sid>/', views.role_jurisdiction, name='role_jurisdiction'),
+    path('user_index/', views.user_index, name='user_index')
 
 ]
