@@ -33,6 +33,27 @@ class Registration(models.Model):
     r_remarks = models.CharField(max_length=100, verbose_name='备注')
     r_time = models.DateTimeField(auto_now_add=True, verbose_name='挂号时间')
     r_status = models.SmallIntegerField(choices=REGISTRATION_STATUS, default=1, verbose_name='挂号状态')
+    def status(self): #状态
+        if self.r_status == 1:
+            return '已挂号'
+        elif self.r_status == 2:
+            return '已住院'
+        else:
+            return '已退号'
+
+    def self_paying(self): #是否自费
+        if self.r_self_paying == 1:
+            return '自费'
+        else:
+            return '不自费'
+
+    def examination(self): #初诊，复诊
+        if self.r_examination == 1 :
+            return '初诊'
+        else:
+            return '复诊'
+
+
 
 
 class Hospital(models.Model):
@@ -49,6 +70,14 @@ class Hospital(models.Model):
     h_disease = models.CharField(max_length=150, verbose_name='病情')
     h_status = models.SmallIntegerField(choices=HOSPITAL_STATUS, verbose_name='住院状态')
     h_time = models.DateTimeField(auto_now_add=True, verbose_name='入院时间')
+
+    def rstatus(self): #状态
+        if self.h_status == 1:
+            return '已住院'
+        elif self.h_status == 2:
+            return '已出院'
+        else:
+            return '已结算'
 
 
 class Cost(models.Model):
