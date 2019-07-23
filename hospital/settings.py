@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'hospital.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tes',
+        'NAME': 'hospital',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '172.16.43.29',
@@ -123,7 +123,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
