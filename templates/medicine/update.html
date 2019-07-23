@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>添加药品--中软高科-2015</title>
+    <title>修改药品--中软高科-2015</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'Css/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'Css/bootstrap-responsive.css' %}" />
@@ -13,7 +13,7 @@
     <script type="text/javascript" src="{% static 'Js/ckform.js' %}"></script>
     <script type="text/javascript" src="{% static 'Js/common.js' %}"></script>
     <script type="text/javascript" src="{% static 'Js/ckeditor/ckeditor.js' %}"></script>
- 
+
 
     <style type="text/css">
         body {
@@ -35,7 +35,7 @@
 
     </style>
     <script type="text/javascript">
-    $(function () {       
+    $(function () {
 		$('#backid').click(function(){
 				window.location.href="{% url 'mindex' %}";
 		 });
@@ -43,65 +43,66 @@
     </script>
 </head>
 <body>
-<form action="{% url 'madd' %}" method="post" class="definewidth m20">
+<form action="{% url 'mupdate' sid=b.id %}" method="post" class="definewidth m20" enctype="multipart/form-data">
     {% csrf_token %}
 <table class="table table-bordered table-hover definewidth m10">
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>药品编号</td>
-        <td><input type="text" name="d_number"/></td>
+
+        <td><input type="text" value="{{ b.d_number }}" name="d_number"/></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">图片</td>
-        <td><input type="file" name="d_picture"/></td>
+        <td><img src="/static/{{ b.d_picture }}"/><input type="file" value="{{ b.d_picture }}" name="d_picture"/></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>进价</td>
-        <td><input type="text" name="d_p_price"/></td>
+        <td><input type="text" value="{{ b.d_p_price }}" name="d_p_price"/></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>售价</td>
-        <td><input type="text" name="d_s_price"/></td>
+        <td><input type="text" value="{{ b.d_s_price }}" name="d_s_price"/></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>药品名称</td>
-        <td><input type="text" name="d_name"/></td>
+        <td><input type="text" value="{{ b.d_name }}" name="d_name"/></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>药品类型</td>
-        <td><input type="radio" name="d_type" value="1" checked/>处方药&nbsp;&nbsp;&nbsp;<input type="radio" name="d_type" value="3"/>中药&nbsp;&nbsp;&nbsp;<input type="radio" name="d_type" value="2"/>非处方药</td>
+        <td><input type="radio"  name="d_type" value="1" checked/>处方药&nbsp;&nbsp;&nbsp;<input type="radio" name="b.d_type" value="3"/>中药&nbsp;&nbsp;&nbsp;<input type="radio" name="b.d_type" value="2"/>非处方药</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">简单描述</td>
-        <td><input type="text" name="d_describe"/></td>
+        <td><input type="text" value="{{ b.d_name }}" name="d_describe"/></td>
     </tr>
 
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>保质期</td>
-        <td><input type="text" name="d_expiration_date"/>月</td>
+        <td><input type="text" value="{{ b.d_expiration_date }}" name="d_expiration_date"/>月</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">状态</td>
-        <td><input type="text" name="d_status"/></td>
+        <td><input type="text" value="{{ b.d_status }}" name="d_status"/></td>
     </tr><tr>
         <td width="10%" class="tableleft">药品库存</td>
-        <td><input type="text" name="d_inventory"/></td>
+        <td><input type="text" value="{{ b.d_inventory }}" name="d_inventory"/></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">详细描述</td>
-        <td><textarea name="d_detail"></textarea></td>
+        <td><textarea name="d_detail">{{ b.d_detail }}</textarea></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">生产厂商</td>
-        <td><textarea name="d_manufacturers"></textarea></td>
+        <td><textarea name="d_manufacturers">{{ b.d_manufacturers }}</textarea></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>服用说明</td>
-        <td><input type="text" name="d_explain"/></td>
+        <td><input type="text" value="{{ b.d_explain }}" name="d_explain"/></td>
     </tr>
-   
+
 	<tr>
         <td width="10%" class="tableleft">备注</td>
-        <td><textarea name="d_remarks"></textarea></td>
+        <td><textarea name="d_remarks">{{ b.d_remarks }}</textarea></td>
 	</tr>
     <tr>
         <td colspan="2">

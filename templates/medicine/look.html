@@ -43,73 +43,77 @@
     </script>
 </head>
 <body>
-<form action="{% url 'mindex' %}" method="post" class="definewidth m20">
+<form action="{% url 'mlook' sid=b.id %}" method="post" class="definewidth m20">
     {% csrf_token %}
 <table class="table table-bordered table-hover definewidth m10">
+
+
     <tr>
         <td width="10%" class="tableleft">药品编号</td>
-        <td>J6764</td>
+        <td>{{ b.d_number }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">图片</td>
-        <td><img src="1.png"/></td>
+        <td><img src="/static/{{ b.d_picture }}"/></td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">进价</td>
-        <td>2元</td>
+        <td>{{ b.d_p_price }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">售价</td>
-        <td>128.9元</td>
+        <td>{{ b.d_s_price }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">药品名称</td>
-        <td>感冒药</td>
+        <td>{{ b.d_name }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">药品类型</td>
-        <td>处方药</td>
+        <td>{{ b.type }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">简单描述</td>
-        <td>用于普通感冒</td>
+        <td>{{ b.d_describe }}</td>
     </tr>
 
     <tr>
-        <td width="10%" class="tableleft">过期日期</td>
-        <td>2016年01月01日</td>
+        <td width="10%" class="tableleft">保质期</td>
+        <td>{{ b.d_expiration_date}}</td>
     </tr>
     <tr>
-        <td width="10%" class="tableleft">详细描述</td>
-        <td>该药仅用于普通的流行性感冒,孕妇小孩慬用……</td>
+        <td width="10%" class="tableleft" >详细描述</td>
+        <td>{{ b.d_detail }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">生产厂商</td>
-        <td>哈药六厂生产</td>
+        <td>{{ b.d_manufacturers }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">服用说明</td>
-        <td>一次两粒一日三次</td>
+        <td>{{ foo.d_explain }}</td>
     </tr>
     <tr>
         <td width="10%" class="tableleft">库存</td>
-        <td>3000袋</td>
+        <td>{{ b.d_inventory }}</td>
     </tr>
     <tr>
-        <td width="10%" class="tableleft">剩余量</td>
-        <td>1000袋</td>
+        <td width="10%" class="tableleft">状态</td>
+        <td>{{ b.status }}</td>
     </tr>
 	<tr>
         <td width="10%" class="tableleft">备注</td>
-        <td>暂无服用后不良记录</td>
+        <td>{{ b.d_remarks }}</td>
 	</tr>
     <tr>
         <td colspan="2">
 			<center>
 				<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
-			</center
+			</center>
 		</td>
     </tr>
+
+
 </table>
 </form>
 </body>

@@ -43,27 +43,27 @@
     </script>
 </head>
 <body>
-<form action="{% url 'mindex' %}" method="post" class="definewidth m20">
+<form action="{% url 'mappend' sid=b.id %}" method="post" class="definewidth m20">
     {% csrf_token %}
 <table class="table table-bordered table-hover definewidth m10">
     <tr>
         <td width="10%" class="tableleft">药品编号</td>
-        <td>J1121</td>
+        <td>{{ b.d_number }}</td>
     </tr> 
 	
     <tr>
         <td width="10%" class="tableleft">药品名称</td>
-        <td>感冒药</td>
+        <td>{{ b.d_name }}</td>
     </tr>    
 	<tr>
         <td width="10%" class="tableleft">余量</td>
-        <td>300</td>
+        <td>{{ b.d_inventory }}</td>
     </tr>    
 	
     <tr>
         <td width="10%" class="tableleft"><font color="red">*</font>数量</td>
         <td>
-			<input type="text" value="300" />
+			<input type="text" name="d_inventory"/>
 		</td>
     </tr>
 	

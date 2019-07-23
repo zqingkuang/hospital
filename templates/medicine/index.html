@@ -78,7 +78,7 @@
 <table class="table table-bordered table-hover definewidth m10">
     <tr>
         <td width="10%" class="tableleft">药品名称：</td>
-        <td><input type="text" name="pname" value=""/></td>
+        <td><input type="text" name="d_name" /></td>
 		
         <td width="10%" class="tableleft">药品类型：</td>
         <td><select><option>中药</option><option>西药</option><option>处方</option><option>非处方</option></select></td>
@@ -88,7 +88,7 @@
 		
 		  <td colspan="4">
 			<center>
-				<button type="submit" class="btn btn-primary" type="button">查询</button> 
+				<button type="submit" class="btn btn-primary" >查询</button>
 				<button type="submit" class="btn btn-primary" type="button">清空</button> 
 			</center>
         </td>
@@ -112,25 +112,56 @@
     {% for foo in a %}
 	     <tr >
          	<td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
-             <td style="vertical-align:middle;">{{ foo.id }}</td>
-            <td style="vertical-align:middle;">{{ foo.d_name }}</td>
-            <td style="vertical-align:middle;">{{ foo.d_type }}</td>
-            <td style="vertical-align:middle;">{{ foo.d_describe }}</td>
-            <td style="vertical-align:middle;">{{ foo.d_status }}</td>
+             <td style="vertical-align:middle;">{{ foo.d_number}}</td>
+             <td style="vertical-align:middle;">{{ foo.d_name }}</td>
+             <td style="vertical-align:middle;">{{ foo.type }}</td>
+             <td style="vertical-align:middle;">{{ foo.d_describe }}</td>
+             <td style="vertical-align:middle;">{{ foo.status }}</td>
              <td style="vertical-align:middle;">{{ foo.d_inventory }}</td>
                        <td style="vertical-align:middle;">
-					<a href="{% url 'madd' %}">更改</a>&nbsp;&nbsp;&nbsp;
-					<a href="{% url 'mappend' %}">添加库存</a>&nbsp;&nbsp;&nbsp;
-					<a href="{% url 'mlook' %}">详情>>></a>
+					<a href="{% url 'mupdate' sid=foo.id%}">更改</a>&nbsp;&nbsp;&nbsp;
+					<a href="{% url 'mappend' sid=foo.id %}">添加库存</a>&nbsp;&nbsp;&nbsp;
+					<a href="{% url 'mlook' sid=foo.id %}">详情>>></a>
 			</td>
         </tr>
+        {% empty %}
+
     {% endfor %}
   </table>
   
   <table class="table table-bordered table-hover definewidth m10" >
   	<tr><th colspan="5">  <div class="inline pull-right page">
-          <a href='#' >第一页</a> <a href='#'>上一页</a>     <span class='current'>1</span><a href='#'>2</a><a href='/chinapost/index.php?m=Label&a=index&p=3'>3</a><a href='#'>4</a><a href='#'>5</a>  <a href='#' >下一页</a> <a href='#' >最后一页</a>
-		  &nbsp;&nbsp;&nbsp;共<span class='current'>32</span>条记录<span class='current'> 1/33 </span>页
+    {% if page_no == 1 %}
+        <span class='current'>第一页</span> <span class='current'>上一页</span>
+        {% else %}
+        {% for foo in n %}
+            {% if foo == page_no0 %}
+            <a href='{% url "drugs" page_no=1 %}' >第一页</a> <a href='{% url "drugs" page_no=foo %}'>上一页</a>
+            {% endif %}
+        {% endfor %}
+
+
+    {% endif %}
+
+        {% for foo in n %}
+            {% if foo == page_no %}
+                <span class='current'>{{ page_no }}</span>
+                {% else %}
+                <a href="{% url 'drugs' page_no=foo %}">{{ foo }}</a>
+            {% endif %}
+        {% endfor %}
+    {% if page_no == m %}
+        <span class='current'>下一页</span> <span class='current'>尾页</span>
+        {% else %}
+            {% for foo in n %}
+                {% if foo == page_no1 %}
+                 <a href='{% url "drugs" page_no=foo %}'>下一页</a>
+                {% endif %}
+            {% endfor %}
+            <a href='{% url "drugs" page_no=m %}'>尾页</a>
+    {% endif %}
+
+		  &nbsp;&nbsp;&nbsp;共<span class='current'>{{ f }}</span>条记录<span class='current'> {{ page_no }}/{{ m }} </span>页
 		  </div>
 		 <div>
 			<button type="button" class="btn btn-success" id="newNav">添加新药</button>

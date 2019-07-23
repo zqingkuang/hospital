@@ -25,8 +25,21 @@ class Drug(models.Model):
     d_manufacturers = models.CharField(max_length=100, verbose_name='生产厂家')
     d_explain = models.TextField(verbose_name='药品说明')
     d_remarks = models.CharField(max_length=1000, verbose_name='备注')
-    d_inventor = models.IntegerField(verbose_name='药品库存')
+    d_inventory = models.IntegerField(verbose_name='药品库存')
     d_status = models.SmallIntegerField(choices=DRUG_STATUS, verbose_name='药品状态', default=1)
+    def status(self):
+        if self.d_status == 1:
+            return '在售'
+        elif self.d_status == 2:
+            return '停售'
+
+    def type(self):
+        if self.d_type == 1:
+            return '处方药'
+        elif self.d_type == 2:
+            return '非处方药'
+        elif self.d_type == 3:
+            return '中药'
 
 
 class Pharmacy(models.Model):
