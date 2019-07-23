@@ -64,6 +64,8 @@ def add(request):
         d_inventory=request.POST.get('d_inventory')
         d_status=request.POST.get('d_status')
         d_number = request.POST.get('d_number')
+        if not all([d_picture,d_p_price,d_s_price,d_name,d_type,d_describe,d_expiration_date,d_detail,d_manufacturers,d_explain,d_remarks,d_inventory,d_status,d_number]):
+            return render(request,'registration/add.html',{'errmsg':'信息填写不完整'})
         s = Drug.objects.create(d_picture=d_picture, d_p_price=d_p_price, d_s_price=d_s_price, d_name=d_name, d_type=d_type,
                  d_describe=d_describe, d_expiration_date=d_expiration_date, d_detail=d_detail,
                  d_manufacturers=d_manufacturers, d_explain=d_explain, d_remarks=d_remarks,d_inventory=d_inventory,d_status=d_status,d_number=d_number)
